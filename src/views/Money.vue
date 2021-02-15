@@ -14,7 +14,7 @@
     <div>
       <label class="notes">
         <span class="name">备注</span>
-        <input type="text" />
+        <input type="text" placeholder="在这里输入备注" />
       </label>
     </div>
     <div>
@@ -50,3 +50,75 @@ export default {
   name: "Money",
 };
 </script>
+
+<style lang="scss" scoped>
+.types {
+  background: #ddd;
+  display: flex;
+  text-align: center;
+  font-size: 24px;
+  > li {
+    width: 50%;
+    line-height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    &.selected::after {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 3px;
+      background: #333;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+}
+.tags {
+  font-size: 14px;
+  padding: 16px;
+  > .current {
+    display: flex;
+    li {
+      $h: 24px;
+      height: $h;
+      line-height: $h;
+      background: #00a4ef;
+      color: white;
+      border-radius: $h/2;
+      padding: 0 16px;
+      margin-right: 12px;
+    }
+  }
+  > .new {
+    padding-top: 16px;
+    button {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid;
+      color: #999;
+      padding: 0 4px;
+    }
+  }
+}
+.notes {
+  background: #eeeeee;
+  display: block;
+  font-size: 14px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  .name {
+    padding-right: 16px;
+  }
+  input {
+    line-height: 64px;
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    padding-right: 16px;
+  }
+}
+</style>
