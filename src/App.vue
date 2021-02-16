@@ -20,6 +20,5 @@ body {
   font-family: $font-hei;
   font-size: 16px;
   color: #333;
-  background: #f7f7f7;
 }
 </style>
