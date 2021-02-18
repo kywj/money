@@ -58,7 +58,7 @@ export default class Tags extends Vue {
     overflow: auto;
     li {
       $h: 24px;
-      $bg: #d9d9d9;
+      $bg: #bbb;
       height: $h;
       line-height: $h;
       background: $bg;
