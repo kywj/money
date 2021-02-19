@@ -15,7 +15,7 @@ import { Component, Prop, Watch } from "vue-property-decorator";
 export default class FormItem extends Vue {
   @Prop({ required: true }) fieldName!: string;
   @Prop() placeHolder?: string;
-  value = "";
+  @Prop({ default: "" }) value!: string;
   @Watch("value")
   onValueChanged(value: string) {
     this.$emit("update:value", value);
