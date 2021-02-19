@@ -2,7 +2,12 @@
   <div>
     <label class="form-item">
       <span class="name">{{ this.fieldName }}</span>
-      <input type="text" :placeholder="this.placeHolder" v-model="value" />
+      <input
+        type="text"
+        :placeholder="this.placeHolder"
+        :value="value"
+        @input="onValueChanged($event.target.value)"
+      />
     </label>
   </div>
 </template>
@@ -15,7 +20,7 @@ import { Component, Prop, Watch } from "vue-property-decorator";
 export default class FormItem extends Vue {
   @Prop({ required: true }) fieldName!: string;
   @Prop() placeHolder?: string;
-  @Prop({ default: "" }) value!: string;
+  @Prop({ default: "" }) readonly value!: string;
   @Watch("value")
   onValueChanged(value: string) {
     this.$emit("update:value", value);
