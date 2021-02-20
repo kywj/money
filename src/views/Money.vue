@@ -21,7 +21,6 @@ import Types from "@/components/Money/Types.vue";
 import FormItem from "@/components/Money/FormItem.vue";
 import Tags from "@/components/Money/Tags.vue";
 import recordListModel from "@/module/recordListModel.ts";
-import tagListModel from "@/module/tagListModel.ts";
 
 const recordList = recordListModel.fetch();
 
