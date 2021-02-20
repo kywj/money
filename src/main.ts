@@ -7,13 +7,21 @@ import Nav from "@/components/Nav.vue";
 import Layout from "@/components/Layout.vue";
 import Icon from "@/components/Icon.vue";
 import tagListModel from "@/module/tagListModel";
+import recordListModel from "@/module/recordListModel";
 
 Vue.config.productionTip = false;
 Vue.component("Nav", Nav);
 Vue.component("Layout", Layout);
 Vue.component("Icon", Icon);
 
+// record store
+window.recordList = recordListModel.fetch();
+
 window.tagList = tagListModel.fetch();
+
+window.createRecord = (record: RecordItem) => {
+  recordListModel.create(record);
+};
 window.createTag = (name: string) => {
   const message = tagListModel.create(name);
   if (message === "success") {

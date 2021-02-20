@@ -22,6 +22,7 @@ type TagListModel = {
 
 interface Window {
   tagList: Tag[];
+  recordList: RecordItem[];
   createTag: (name: string) => void;
   findTag: (id: string) => Tag | undefined;
   removeTag: (id: string) => boolean;
@@ -29,4 +30,5 @@ interface Window {
     id: string,
     name: string
   ) => "success" | "not found" | "duplicated";
+  createRecord: (record: RecordItem) => void;
 }
