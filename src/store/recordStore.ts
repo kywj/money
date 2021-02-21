@@ -1,5 +1,4 @@
 import clone from "@/lib/clone";
-
 const localStorageKeyName = "recordList";
 
 const recordStore = {

@@ -4,18 +4,6 @@
   </div>
 </template>
 
-<script>
-import store from "@/store/index2.ts";
-export default {
-  name: "App",
-  data() {
-    return {
-      store: store,
-    };
-  },
-};
-</script>
-
 <style lang="scss">
 @import "~@/assets/style/reset.scss";
 @import "~@/assets/style/helper.scss";
