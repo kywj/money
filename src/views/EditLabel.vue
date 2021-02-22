@@ -34,25 +34,25 @@ export default class EditLabel extends Vue {
   }
   created() {
     const id = this.$route.params.id;
+    console.log(id);
+    this.$store.commit("fetchTags");
     this.$store.commit("setCurrentTag", id);
-    console.log(this.tag);
     if (!this.tag) {
+      console.log("no tag");
       this.$router.replace("/404");
+    } else {
+      console.log("has tag");
     }
   }
   update(name: string) {
-    // if (this.tag) {
-    //   store.updateTag(this.tag.id, name);
-    // }
+    if (this.tag) {
+      this.$store.commit("updateTag", { id: this.tag.id, name });
+    }
   }
   remove() {
+    console.log("remove");
     if (this.tag) {
-      return;
-      // if (store.removeTag(this.tag.id)) {
-      //   this.$router.back();
-      // } else {
-      //   window.alert("删除失败");
-      // }
+      this.$store.commit("removeTag", this.tag.id);
     }
   }
   goBack() {
@@ -69,8 +69,6 @@ export default class EditLabel extends Vue {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  > .title {
-  }
   > .leftIcon {
     width: 24px;
     height: 24px;
