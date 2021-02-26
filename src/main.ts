@@ -26,7 +26,7 @@ window.onload = function () {
 }
 
 if (document.documentElement.clientWidth > 500) {
-  window.alert('使用二维码预览效果更佳')
+  window.alert('使用手机预览效果更佳哦~')
   const img = document.createElement('img')
   img.src = '/qrcode.png'
   img.style.position = 'fixed'
