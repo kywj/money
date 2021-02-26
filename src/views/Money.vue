@@ -27,25 +27,22 @@ import recordTypeList from "@/constants/recordTypeList.ts";
 })
 export default class Money extends Vue {
   get recordList() {
-    return this.$store.state.recordList;
+      return this.$store.state.recordList;
+    }
+    recordTypeList = recordTypeList;
+    record: RecordItem = {
+      tags: [], notes: '', type: '-', amount: 0
+    };
+    created() {
+      this.$store.commit('fetchRecords');
+    }
+    onUpdateNotes(value: string) {
+      this.record.notes = value;
+    }
+    saveRecord() {
+      this.$store.commit('createRecord', this.record);
+    }
   }
-  recordTypeList = recordTypeList;
-  record: RecordItem = {
-    tags: [],
-    notes: "",
-    type: "-",
-    amount: 0,
-  };
-  created() {
-    this.$store.commit("fetchRecords");
-  }
-  onUpdateNotes(value: string) {
-    this.record.notes = value;
-  }
-  saveRecord() {
-    this.$store.commit("createRecord", this.record);
-  }
-}
 </script>
 
 <style lang="scss" scoped>
