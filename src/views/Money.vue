@@ -5,11 +5,11 @@
     <div class="notes">
       <FormItem
         fieldName="备注"
+        :value.sync="record.notes"
         placeHolder="请在这里输入备注"
-        @update:value="onUpdateNotes"
       />
     </div>
-    <Tags />
+    <Tags @update:value="record.tags = $event" />
   </layout>
 </template>
 
@@ -27,22 +27,32 @@ import recordTypeList from "@/constants/recordTypeList.ts";
 })
 export default class Money extends Vue {
   get recordList() {
-      return this.$store.state.recordList;
+    return this.$store.state.recordList;
+  }
+  recordTypeList = recordTypeList;
+  record: RecordItem = {
+    tags: [],
+    notes: "",
+    type: "-",
+    amount: 0,
+  };
+  created() {
+    this.$store.commit("fetchRecords");
+  }
+  onUpdateNotes(value: string) {
+    this.record.notes = value;
+  }
+  saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      return window.alert("请选择一个标签");
     }
-    recordTypeList = recordTypeList;
-    record: RecordItem = {
-      tags: [], notes: '', type: '-', amount: 0
-    };
-    created() {
-      this.$store.commit('fetchRecords');
-    }
-    onUpdateNotes(value: string) {
-      this.record.notes = value;
-    }
-    saveRecord() {
-      this.$store.commit('createRecord', this.record);
+    this.$store.commit("createRecord", this.record);
+    if (this.$store.state.createRecordError === null) {
+      window.alert("已保存");
+      this.record.notes = "";
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

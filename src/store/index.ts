@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     recordList: [],
+    createRecordError: null,
     tagList: [],
     currentTag: undefined
   } as RootState,
@@ -17,7 +18,7 @@ const store = new Vuex.Store({
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
     updateTag(state, payload: { id: string; name: string }) {
-      const {id, name} = payload;
+      const { id, name } = payload;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);
@@ -50,8 +51,8 @@ const store = new Vuex.Store({
     fetchRecords(state) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
-    createRecord(state, record) {
-      const record2: RecordItem = clone(record);
+    createRecord(state, record: RecordItem) {
+      const record2 = clone(record);
       record2.createdAt = new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords');
@@ -62,6 +63,14 @@ const store = new Vuex.Store({
     },
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      if (!state.tagList || state.tagList.length === 0) {
+        store.commit('createTag', '衣')
+        store.commit('createTag', '食')
+        store.commit('createTag', '住')
+        store.commit('createTag', '行')
+        store.commit('createTag', '工资')
+        store.commit('createTag', '理财')
+      }
     },
     createTag(state, name: string) {
       const names = state.tagList.map(item => item.name);
@@ -69,7 +78,7 @@ const store = new Vuex.Store({
         window.alert('标签名重复了');
       }
       const id = createId().toString();
-      state.tagList.push({id, name: name});
+      state.tagList.push({ id, name: name });
       store.commit('saveTags');
       window.alert('添加成功');
     },
