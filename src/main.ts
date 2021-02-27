@@ -24,3 +24,7 @@ window.onload = function () {
     window.scrollTo(0, 10000)
   }, 0)
 }
+
+if (document.documentElement.clientWidth > 500) {
+  window.alert('使用手机预览效果更佳哦~')
+}
