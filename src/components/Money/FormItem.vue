@@ -2,12 +2,22 @@
   <div>
     <label class="form-item">
       <span class="name">{{ this.fieldName }}</span>
-      <input
-        type="text"
-        :placeholder="placeHolder"
-        :value="value"
-        @input="onValueChanged($event.target.value)"
-      />
+      <template v-if="type === 'date'">
+        <input
+          :type="type || 'text'"
+          :placeholder="placeHolder"
+          :value="x(value)"
+          @input="onValueChanged($event.target.value)"
+        />
+      </template>
+      <template v-else>
+        <input
+          :type="type || 'text'"
+          :placeholder="placeHolder"
+          :value="value"
+          @input="onValueChanged($event.target.value)"
+        />
+      </template>
     </label>
   </div>
 </template>
@@ -15,15 +25,22 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
+import dayjs from "dayjs";
 
 @Component
 export default class FormItem extends Vue {
   @Prop({ required: true }) fieldName!: string;
   @Prop() placeHolder?: string;
   @Prop({ default: "" }) readonly value!: string;
+  @Prop() type?: string;
 
+  @Watch("value")
   onValueChanged(value: string) {
+    console.log(value);
     this.$emit("update:value", value);
+  }
+  x(isoString: string) {
+    return dayjs(isoString).format("YYYY-MM-DD");
   }
 }
 </script>

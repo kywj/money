@@ -2,6 +2,15 @@
   <layout class-prefix="layout">
     <Number-pad :value.sync="record.amount" @submit="saveRecord" />
     <Tabs :dataSource="recordTypeList" :value.sync="record.type" />
+
+    <div class="createdAt">
+      <FormItem
+        fieldName="日期"
+        type="date"
+        :value.sync="record.createdAt"
+        placeHolder="请在这里输入日期"
+      />
+    </div>
     <div class="notes">
       <FormItem
         fieldName="备注"
@@ -20,7 +29,7 @@ import NumberPad from "@/components/Money/NumberPad.vue";
 import FormItem from "@/components/Money/FormItem.vue";
 import Tags from "@/components/Money/Tags.vue";
 import Tabs from "@/components/Tabs.vue";
-import recordTypeList from "@/constants/recordTypeList.ts";
+import recordTypeList from "@/constants/recordTypeList";
 
 @Component({
   components: { NumberPad, FormItem, Tags, Tabs },
@@ -35,6 +44,7 @@ export default class Money extends Vue {
     notes: "",
     type: "-",
     amount: 0,
+    createdAt: new Date().toISOString(),
   };
   created() {
     this.$store.commit("fetchRecords");
