@@ -4,7 +4,9 @@
 
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+        <h3 class="title">
+          {{ beautify(group.title) }}<span>￥{{ group.total }}</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span class="tagString">{{ tagString(item.tags) }}</span>
@@ -23,9 +25,9 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
-import recordTypeList from "@/constants/recordTypeList.ts";
+import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
-import clone from "@/lib/clone.ts";
+import clone from "@/lib/clone";
 
 @Component({
   components: { Tabs },
@@ -63,9 +65,6 @@ export default class Statistics extends Vue {
       .sort(
         (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
       );
-    if (newList.length === 0) {
-      return [];
-    }
     type Result = { title: string; total?: number; items: RecordItem[] }[];
     const result: Result = [
       {
@@ -87,6 +86,8 @@ export default class Statistics extends Vue {
     }
     result.map((group) => {
       group.total = group.items.reduce((sum, item) => {
+        console.log(sum);
+        console.log(item);
         return sum + item.amount;
       }, 0);
     });
@@ -104,9 +105,6 @@ export default class Statistics extends Vue {
 .noResult {
   padding: 16px;
   text-align: center;
-}
-.tagString {
-  font-weight: bold;
 }
 ::v-deep {
   .type-tabs-item {
