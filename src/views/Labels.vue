@@ -12,9 +12,7 @@
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <Button class="createTag" @click="createTag">
-        新建标签
-      </Button>
+      <Button class="createTag" @click="createTag"> 新建标签 </Button>
     </div>
   </layout>
 </template>
@@ -23,7 +21,7 @@
 import { Component } from "vue-property-decorator";
 import Button from "@/components/Button.vue";
 import { mixins } from "vue-class-component";
-import TagHelper from "@/mixins/tagHelper.ts";
+import TagHelper from "@/mixins/tagHelper";
 @Component({
   components: { Button },
   mixins: [TagHelper],
