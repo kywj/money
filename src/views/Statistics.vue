@@ -33,7 +33,7 @@ const ECharts: any = require("vue-echarts").default;
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { PieChart } from "echarts/charts";
-import "echarts/lib/chart/bar";
+import "echarts/lib/chart/line";
 import "echarts/lib/component/grid";
 
 import {
@@ -59,15 +59,76 @@ export default class Statistics extends Vue {
     return {
       xAxis: {
         type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        data: [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun",
+        ],
+      },
+      tooltip: {
+        show: true,
       },
       yAxis: {
         type: "value",
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: "bar",
+          data: [
+            120,
+            200,
+            150,
+            80,
+            70,
+            110,
+            130,
+            120,
+            200,
+            150,
+            80,
+            70,
+            110,
+            130,
+            120,
+            200,
+            150,
+            80,
+            70,
+            110,
+            130,
+            120,
+            200,
+            150,
+            80,
+            70,
+            110,
+            130,
+          ],
+          type: "line",
         },
       ],
     };
