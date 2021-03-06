@@ -1,6 +1,7 @@
 <template>
   <layout>
     <Tabs :dataSource="recordTypeList" class-prefix="type" :value.sync="type" />
+    <v-chart class="chart" :option="x" />
 
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -28,11 +29,49 @@ import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
+const ECharts: any = require("vue-echarts").default;
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { PieChart } from "echarts/charts";
+import "echarts/lib/chart/bar";
+import "echarts/lib/component/grid";
+
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from "echarts/components";
+import VChart, { THEME_KEY } from "vue-echarts";
+
+use([
+  CanvasRenderer,
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
 
 @Component({
-  components: { Tabs },
+  components: { Tabs, ECharts, VChart },
 })
 export default class Statistics extends Vue {
+  get x() {
+    return {
+      xAxis: {
+        type: "category",
+        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: "bar",
+        },
+      ],
+    };
+  }
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
   }
@@ -42,7 +81,6 @@ export default class Statistics extends Vue {
     if (day.isSame(now, "day")) {
       return "今天";
     } else if (day.isSame(now.subtract(1, "day"), "day")) {
-      console.log("hi");
       return "昨天";
     } else if (day.isSame(now.subtract(2, "day"), "day")) {
       return "前天";
@@ -136,5 +174,9 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 16px;
   color: #999;
+}
+.chart {
+  max-width: 100%;
+  height: 400px;
 }
 </style>
