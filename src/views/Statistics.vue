@@ -1,7 +1,7 @@
 <template>
   <layout>
     <Tabs :dataSource="recordTypeList" class-prefix="type" :value.sync="type" />
-    <v-chart class="chart" :option="x" />
+    <Chart class="chart" :options="x" />
 
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -29,110 +29,12 @@ import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
-const ECharts: any = require("vue-echarts").default;
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import "echarts/lib/chart/line";
-import "echarts/lib/component/grid";
-
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-} from "echarts/components";
-import VChart, { THEME_KEY } from "vue-echarts";
-
-use([
-  CanvasRenderer,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-]);
+import Chart from "@/components/Chart.vue";
 
 @Component({
-  components: { Tabs, ECharts, VChart },
+  components: { Tabs, Chart },
 })
 export default class Statistics extends Vue {
-  get x() {
-    return {
-      xAxis: {
-        type: "category",
-        data: [
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-          "Sun",
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-          "Sun",
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-          "Sun",
-          "Mon",
-          "Tue",
-          "Wed",
-          "Thu",
-          "Fri",
-          "Sat",
-          "Sun",
-        ],
-      },
-      tooltip: {
-        show: true,
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          data: [
-            120,
-            200,
-            150,
-            80,
-            70,
-            110,
-            130,
-            120,
-            200,
-            150,
-            80,
-            70,
-            110,
-            130,
-            120,
-            200,
-            150,
-            80,
-            70,
-            110,
-            130,
-            120,
-            200,
-            150,
-            80,
-            70,
-            110,
-            130,
-          ],
-          type: "line",
-        },
-      ],
-    };
-  }
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
   }
@@ -150,6 +52,88 @@ export default class Statistics extends Vue {
     } else {
       return day.format("YYYY年M月D日");
     }
+  }
+  get x() {
+    return {
+      xAxis: {
+        type: "category",
+        data: [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+        ],
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: [
+            150,
+            230,
+            224,
+            218,
+            135,
+            147,
+            260,
+            150,
+            230,
+            224,
+            218,
+            135,
+            147,
+            260,
+            150,
+            230,
+            224,
+            218,
+            135,
+            147,
+            260,
+            150,
+            230,
+            224,
+            218,
+            135,
+            147,
+            260,
+            1,
+            2,
+          ],
+          type: "line",
+        },
+      ],
+      tooltip: {
+        show: true,
+      },
+    };
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
