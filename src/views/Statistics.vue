@@ -1,8 +1,9 @@
 <template>
   <layout>
     <Tabs :dataSource="recordTypeList" class-prefix="type" :value.sync="type" />
-    <Chart class="chart" :options="x" />
-
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="x" />
+    </div>
     <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
@@ -38,6 +39,9 @@ export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
   }
+  mounted() {
+    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+  }
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -55,8 +59,14 @@ export default class Statistics extends Vue {
   }
   get x() {
     return {
+      grid: {
+        left: 0,
+        right: 0,
+      },
       xAxis: {
         type: "category",
+        axisTick: { alignWithLabel: true },
+        axisLine: { lineStyle: { color: "#666" } },
         data: [
           "1",
           "2",
@@ -92,9 +102,13 @@ export default class Statistics extends Vue {
       },
       yAxis: {
         type: "value",
+        show: false,
       },
       series: [
         {
+          symbol: "circle",
+          itemStyle: { borderWidth: 1, color: "#666", borderColor: "#666" },
+          symbolSize: 12,
           data: [
             150,
             230,
@@ -132,6 +146,9 @@ export default class Statistics extends Vue {
       ],
       tooltip: {
         show: true,
+        triggerOn: "click",
+        position: "top",
+        formatter: "{c}",
       },
     };
   }
@@ -221,7 +238,13 @@ export default class Statistics extends Vue {
   color: #999;
 }
 .chart {
-  max-width: 100%;
+  width: 430%;
   height: 400px;
+  &-wrapper {
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 </style>
